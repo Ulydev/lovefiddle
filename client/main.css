@@ -1,0 +1,92 @@
+html, body {
+  height: 100%;
+}
+
+/* */
+
+#editor, #game {
+  height: auto;
+}
+
+#editor {
+  position: relative;
+  top: 50px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: calc(100% - 50px);
+}
+
+#right {
+  position: relative;
+  top: 50px;
+  height: calc(100% - 50px);
+}
+
+#game, #output {
+  background-color: #272822;
+}
+
+#output {
+  padding: 8px;
+  color: white;
+  font-family: 'Monaco';
+  font-size: 12px;
+}
+
+/* */
+
+.split {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.content {
+  border: 1px solid #C0C0C0;
+  box-shadow: inset 0 1px 2px #e4e4e4;
+  background-color: #C0C0C0;
+}
+.gutter {
+  background-color: #222222;
+  background-repeat: no-repeat;
+  background-position: 50%;
+}
+.gutter.gutter-horizontal {
+  cursor: col-resize;
+  background-image: url('/grips/vertical.png');
+}
+.gutter.gutter-vertical {
+  cursor: row-resize;
+  background-image: url('/grips/horizontal.png');
+}
+.split.split-horizontal, .gutter.gutter-horizontal {
+  height: 100%;
+  float: left;
+}
+
+/* */
+
+#canvas, #loadingCanvas {
+  margin: auto;
+  border-width: 10px;
+  border-radius: 10px;
+  border-color: #b1e3fa;
+  border-style: solid;
+  margin-bottom: 48px;
+}
+
+#canvas {
+  margin-top: 24px;
+  padding-right: 0;
+  display: none;
+  border: 0px none;
+}
+
+/* */
+
+.spinner-container {
+  position: fixed;
+  z-index: 10;
+}

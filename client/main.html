@@ -1,0 +1,74 @@
+<head>
+  <title>LÖVE Fiddle</title>
+  <link rel="shortcut icon" href="/favicon.png"/>
+</head>
+
+<body>
+</body>
+
+<template name="main">
+
+  {{#if isLoading}}
+    {{> spinner}}
+  {{/if}}
+
+  {{> nav}}
+
+    {{> leftPanel}}
+    {{> rightPanel}}
+
+  <script async src="/love.js"></script>
+
+</template>
+
+<template name="nav">
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <img class="pull-left" alt="Logo" src="/logo.png" width=48 height=48 style="margin-right: 12px;">
+        <a class="navbar-brand" href="#">lovefiddle</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <select class="form-control navbar-btn" id="theme-picker">
+          <option>Dark</option>
+          <option>Clear</option>
+        </select>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        {{#if isGameSaved}}
+          <li><a href="#" style="pointer-events: none; color: green;"><span class="active glyphicon glyphicon-saved"></span> Saved</a></li>
+        {{else}}
+          <li><a href="#" class="save-button"><span class="glyphicon glyphicon-save"></span> Save</a></li>
+        {{/if}}
+        {{#if isGameRunning}}
+          <li><a href="#" class="run-button"><span class="glyphicon glyphicon-stop"></span> Stop</a></li>
+        {{else}}
+          <li><a href="#" class="run-button"><span class="glyphicon glyphicon-play"></span> Run</a></li>
+        {{/if}}
+      </ul>
+    </div>
+  </nav>
+</template>
+
+<template name="leftPanel">
+
+  <div id="editor" class="split split-horizontal">{{#if content}}{{content}}{{else}}love.window.setMode(400, 300)
+
+function love.draw()
+    love.graphics.print("Hi!", 40, 40)
+end{{/if}}</div>
+
+</template>
+
+<template name="rightPanel">
+
+  <div id="right" class="split split-horizontal">
+    <div id="game" class="split split-vertical">
+      <canvas id="canvas" oncontextmenu="event.preventDefault()"></canvas>
+      <canvas id="loadingCanvas" oncontextmenu="event.preventDefault()" width="400" height="300"></canvas>
+    </div>
+    <div id="output" class="split split-vertical">
+    </div>
+  </div>
+
+</template>
