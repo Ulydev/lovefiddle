@@ -17,8 +17,6 @@
     {{> leftPanel}}
     {{> rightPanel}}
 
-  <script async src="/love.js"></script>
-
 </template>
 
 <template name="nav">
@@ -40,10 +38,14 @@
         {{else}}
           <li><a href="#" class="save-button"><span class="glyphicon glyphicon-save"></span> Save</a></li>
         {{/if}}
-        {{#if isGameRunning}}
-          <li><a href="#" class="run-button"><span class="glyphicon glyphicon-stop"></span> Stop</a></li>
+        {{#if loveLoaded}}
+          {{#if isGameRunning}}
+            <li><a href="#" class="run-button"><span class="glyphicon glyphicon-stop"></span> Stop</a></li>
+          {{else}}
+            <li><a href="#" class="run-button"><span class="glyphicon glyphicon-play"></span> Run</a></li>
+          {{/if}}
         {{else}}
-          <li><a href="#" class="run-button"><span class="glyphicon glyphicon-play"></span> Run</a></li>
+          <li><a href="#" style="pointer-events: none;"><i class="glyphicon glyphicon-refresh gly-spin"></i></a></li>
         {{/if}}
       </ul>
     </div>
@@ -65,7 +67,6 @@ end{{/if}}</div>
   <div id="right" class="split split-horizontal">
     <div id="game" class="split split-vertical">
       <canvas id="canvas" oncontextmenu="event.preventDefault()"></canvas>
-      <canvas id="loadingCanvas" oncontextmenu="event.preventDefault()" width="400" height="300"></canvas>
     </div>
     <div id="output" class="split split-vertical">
     </div>

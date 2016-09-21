@@ -6,6 +6,7 @@ Fiddles = new Mongo.Collection('fiddles');
 
 import './main.html';
 
+Session.set('loveLoaded', false);
 Session.set('isLoading', false);
 Session.set('isGameSaved', true);
 Session.set('isGameRunning', false);
@@ -36,7 +37,6 @@ function initModule() {
     })(),
     setStatus: function(text) {
       if (text) {
-        document.getElementById('loadingCanvas').style.display = 'none';
         document.getElementById('canvas').style.display = 'block';
       }
     },
@@ -103,11 +103,18 @@ Template.main.onRendered(() => {
 
   Router.dispatch = function () {}; //TAKE THIS MOTHERF***ING ROUTER
 
+  $.getScript('/love.js', function() {
+    Session.set('loveLoaded', true);
+  });
+
 })
 
 //nav
 
 Template.nav.helpers({
+  loveLoaded() {
+    return Session.get('loveLoaded');
+  },
   isGameSaved() {
     return Session.get('isGameSaved');
   },
@@ -139,22 +146,35 @@ Template.nav.events({
   },
   'click .run-button'(event) {
     if (!Session.get('isGameRunning')) {
+
       codeString = editor.getValue();
-
-      FS.createDataFile('main.lua', null, codeString, true, true, true);
-
+      FS.writeFile('/main.lua', codeString);
       Module.callMain(Module.arguments);
       Session.set('isGameRunning', true);
+
     } else {
+
       try {
-        FS.unlink('main.lua');
+        Browser.mainLoop.pause();
+        Browser.mainLoop.func = null;
+        Module['noExitRuntime'] = false;
+        Module['exit'](0);
+        FS.unlink('/main.lua');
       } catch (e) {
         console.log(e);
       }
 
-      //Module['exit'](true);
-
       Session.set('isGameRunning', false);
+      Session.set('loveLoaded', false);
+
+      document.getElementById('game').removeChild(document.getElementById('canvas'));
+      document.getElementById('game').innerHTML = '<canvas id="canvas" oncontextmenu="event.preventDefault()"></canvas>';
+
+      initModule();
+      $.getScript('/love.js', function() {
+        Session.set('loveLoaded', true);
+      });
+
     }
   }
 });
