@@ -138,7 +138,6 @@ Template.nav.events({
         console.log("Error: " + err);
 
       console.log("Saved fiddle #" + fiddle);
-      //TODO: this refreshes the whole page
       history.pushState({}, "fiddle", fiddle);
       Session.set('isGameSaved', true);
       Session.set('isLoading', false);
